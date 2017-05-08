@@ -50,6 +50,7 @@ angular.module('your_app_name.app.services', [])
     }
     this.successLogout = function () {
       console.log("Logout Success");
+      window.localStorage.removeItem('user');
       $rootScope.$emit('userLoggedOut');
     };
     this.failLogout = function () {
