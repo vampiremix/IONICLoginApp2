@@ -1,6 +1,6 @@
 angular.module('your_app_name.app.services', [])
 
-  .service('AuthService', function ($rootScope,$state, $auth) {
+  .service('AuthService', function ($rootScope, $state, $auth) {
     this.applogin = function (user) {
       $auth.login(user, {
         url: 'http://localhost:3000/api/auth/signin'
@@ -33,7 +33,7 @@ angular.module('your_app_name.app.services', [])
     }
     this.successFBAuth = function (data) {
 
-      $rootScope.$emit('facebookuser',data.data);
+      $rootScope.$emit('facebookuser', data.data);
       console.log("SERVICE_SUCC");
 
     }
@@ -42,6 +42,19 @@ angular.module('your_app_name.app.services', [])
       console.log("SERVICE_FAIL!!");
     }
 
+    this.applogout = function () {
+      $auth.logout({
+        url: 'http://localhost:3000/api/auth/signout'
+      }).then(this.successLogout).catch(this.failLogout);
+
+    }
+    this.successLogout = function () {
+      console.log("Logout Success");
+      $rootScope.$emit('userLoggedOut');
+    };
+    this.failLogout = function () {
+      console.log("Logout Error");
+    };
   })
 
   .service('PostService', function ($http, $q) {
